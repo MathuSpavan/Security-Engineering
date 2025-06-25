@@ -1,0 +1,32 @@
+#!/bin/bash
+# Demonstration von Ressourcengrenzen in Bash
+# Nutzungsbeispiel: ./resource_limits.sh <cpu|file|stack>
+
+trap 'echo "CPU-Zeitlimit erreicht"; exit' SIGXCPU
+trap 'echo "Dateigr\303\266\303\237enlimit erreicht"; exit' SIGXFSZ
+trap 'echo "Stapellimit erreicht"; exit' SIGSEGV
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 <cpu|file|stack>"
+  exit 1
+fi
+
+case "$1" in
+  cpu)
+    ulimit -t 1
+    while :; do :; done
+    ;;
+  file)
+    ulimit -f 1
+    while :; do printf A; done > bigfile
+    ;;
+  stack)
+    ulimit -s 8
+    recurse() { recurse; }
+    recurse
+    ;;
+  *)
+    echo "Unknown option: $1"
+    exit 1
+    ;;
+esac
