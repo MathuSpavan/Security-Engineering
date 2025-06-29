@@ -1,0 +1,15 @@
+# Übung 5 - Aufgabe 3
+
+Dieses Skript demonstriert, wie man in Bash Ressourcengrenzen mit `ulimit` setzt
+und die dadurch erzeugten Signale mittels `trap` abfängt.
+
+## Nutzung
+
+```bash
+./resource_limits.sh cpu   # überschreitet das CPU-Zeitlimit
+./resource_limits.sh file  # überschreitet das Dateigrößenlimit
+./resource_limits.sh stack # überschreitet das Stapelgrößenlimit
+```
+
+Nach dem Erreichen eines Limits gibt der jeweilige Prozess eine Meldung aus und
+beendet sich automatisch.
